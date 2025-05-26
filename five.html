@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Options Chain Admin Panel</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts for Orbitron (unique look) -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-bg: #0a1224;
+            --sidebar-bg: #101624;
+            --accent-cyan: #00cfff;
+            --accent-blue: #1a4b8e;
+            --accent-pink: #e14eca;
+            --accent-green: #00e6b8;
+            --text-main: #b8eaff;
+            --text-muted: #6c757d;
+        }
+        body {
+            background: var(--main-bg);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100vh;
+            background: var(--sidebar-bg);
+            color: var(--text-main);
+            z-index: 1000;
+            transition: left 0.3s;
+            box-shadow: 2px 0 10px #0004;
+        }
+        #sidebar .sidebar-header {
+            padding: 1.5rem 1rem 1rem 1.5rem;
+            background: var(--accent-blue);
+            color: #fff;
+            font-family: 'Orbitron', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            letter-spacing: 1px;
+        }
+        #sidebar .sidebar-header h3 {
+            margin: 0;
+            font-size: 1.4rem;
+        }
+        #sidebar ul.components {
+            padding: 1rem 0;
+        }
+        #sidebar ul.components li {
+            padding: 0.5rem 1.5rem;
+            border-left: 3px solid transparent;
+            transition: background 0.2s, border-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        #sidebar ul.components li.active,
+        #sidebar ul.components li:hover {
+            background: #18213a;
+            border-left: 3px solid var(--accent-cyan);
+        }
+        #sidebar ul.components li a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-family: 'Orbitron', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        #sidebar ul.components li a i {
+            margin-right: 0.7em;
+            color: var(--accent-cyan);
+        }
+        #sidebar .btn {
+            background: var(--accent-cyan);
+            border: none;
+            color: #fff;
+            font-weight: 600;
+            font-family: 'Orbitron', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        #sidebar .btn:hover {
+            background: var(--accent-blue);
+            color: #fff;
+        }
+        #sidebar .btn-outline-primary {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            background: transparent;
+        }
+        #sidebar .btn-outline-primary:hover {
+            background: var(--accent-cyan);
+            color: #fff;
+        }
+        #sidebar .btn-outline-danger {
+            border-color: var(--accent-pink);
+            color: var(--accent-pink);
+            background: transparent;
+        }
+        #sidebar .btn-outline-danger:hover {
+            background: var(--accent-pink);
+            color: #fff;
+        }
+        #sidebar .p-3 {
+            padding: 1rem 1.5rem;
+        }
+        #content {
+            margin-left: 250px;
+            transition: margin-left 0.3s;
+            min-height: 100vh;
+            background: var(--main-bg);
+        }
+        #topbar {
+            background: var(--sidebar-bg);
+            padding: 0.75rem 2rem;
+            border-bottom: 1px solid var(--accent-blue);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        #topbar h5 {
+            color: var(--accent-cyan);
+            font-family: 'Orbitron', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin-bottom: 0;
+        }
+        #topbar .btn-link {
+            color: var(--accent-cyan);
+            font-size: 1.3rem;
+        }
+        #topbar .user-profile img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border: 2px solid var(--accent-cyan);
+        }
+        #topbar .user-profile .dropdown-toggle {
+            color: var(--text-main);
+        }
+        .modal-content {
+            background: var(--sidebar-bg);
+            color: var(--text-main);
+            border-radius: 10px;
+            border: 1px solid var(--accent-blue);
+        }
+        .modal-header, .modal-footer {
+            border-color: var(--accent-blue);
+        }
+        .form-label {
+            color: var(--accent-cyan);
+        }
+        .form-control {
+            background: #0a1224;
+            color: var(--text-main);
+            border: 1px solid var(--accent-blue);
+        }
+        .form-control:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 0 0.2rem rgba(0,207,255,.15);
+        }
+        @media (max-width: 768px) {
+            #sidebar {
+                left: -250px;
+            }
+            #sidebar.active {
+                left: 0;
+            }
+            #content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>Options Chain Admin</h3>
+        </div>
+        <ul class="list-unstyled components" id="admin-options-list">
+            <li class="active"><a href="#"><i class="fas fa-table"></i> Manage Options Data</a></li>
+        </ul>
+    </nav>
+
+    <!-- Modal for Add/Edit Option Data -->
+    <div class="modal fade" id="optionDataModal" tabindex="-1" aria-labelledby="optionDataModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <form id="optionDataForm" class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="optionDataModalLabel">Add/Edit Option Data</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <div class="row">
+                  <div class="col-md-6">
+                      <h6 class="text-info">Call Option</h6>
+                      <div class="mb-3">
+                          <label for="callStrike" class="form-label">Strike Price</label>
+                          <input type="text" class="form-control" id="callStrike" name="callStrike" required placeholder="e.g. 18500 or any text">
+                      </div>
+                      <div class="mb-3">
+                          <label for="callPremium" class="form-label">Premium</label>
+                          <input type="text" class="form-control" id="callPremium" name="callPremium" required placeholder="e.g. 120.5 or any text">
+                      </div>
+                      <div class="mb-3">
+                          <label for="callOI" class="form-label">Open Interest</label>
+                          <input type="text" class="form-control" id="callOI" name="callOI" required placeholder="e.g. 15000 or any text">
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <h6 class="text-warning">Put Option</h6>
+                      <div class="mb-3">
+                          <label for="putStrike" class="form-label">Strike Price</label>
+                          <input type="text" class="form-control" id="putStrike" name="putStrike" required placeholder="e.g. 18500 or any text">
+                      </div>
+                      <div class="mb-3">
+                          <label for="putPremium" class="form-label">Premium</label>
+                          <input type="text" class="form-control" id="putPremium" name="putPremium" required placeholder="e.g. 110.2 or any text">
+                      </div>
+                      <div class="mb-3">
+                          <label for="putOI" class="form-label">Open Interest</label>
+                          <input type="text" class="form-control" id="putOI" name="putOI" required placeholder="e.g. 12000 or any text">
+                      </div>
+                  </div>
+              </div>
+              <input type="hidden" id="optionDataIndex" name="optionDataIndex">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Data</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Page Content -->
+    <div id="content">
+        <!-- Topbar -->
+        <nav id="topbar">
+            <div class="d-flex align-items-center">
+                <button id="sidebarCollapse" class="btn btn-link me-3">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h5 class="mb-0">Options Data Admin</h5>
+            </div>
+            <div class="user-profile dropdown">
+                <a href="#" class="dropdown-toggle text-decoration-none" data-bs-toggle="dropdown">
+                    <img src="https://via.placeholder.com/40/1a4b8e/ffffff?text=AU" alt="User" class="rounded-circle">
+                    <span class="ms-2 d-none d-sm-inline">Admin User</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Profile</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container-fluid p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4>Calls &amp; Puts Data</h4>
+                <button class="btn btn-success" id="addOptionDataBtn"><i class="fas fa-plus"></i> Add Option Data</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-dark table-striped align-middle" id="optionDataTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Call Strike</th>
+                            <th>Call Premium</th>
+                            <th>Call OI</th>
+                            <th>Put Strike</th>
+                            <th>Put Premium</th>
+                            <th>Put OI</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data rows rendered by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Option Data CRUD logic
+        // Data is stored in localStorage['optionChainData'].
+        // index.html reads from this same key to display calls and puts.
+
+        function getOptionData() {
+            const data = localStorage.getItem('optionChainData');
+            return data ? JSON.parse(data) : [];
+        }
+        function saveOptionData(data) {
+            localStorage.setItem('optionChainData', JSON.stringify(data));
+            // index.html will automatically show the latest data from localStorage
+        }
+
+        function renderOptionDataTable() {
+            const data = getOptionData();
+            const tbody = document.querySelector('#optionDataTable tbody');
+            tbody.innerHTML = '';
+            data.forEach((row, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${idx + 1}</td>
+                    <td>${row.callStrike}</td>
+                    <td>${row.callPremium}</td>
+                    <td>${row.callOI}</td>
+                    <td>${row.putStrike}</td>
+                    <td>${row.putPremium}</td>
+                    <td>${row.putOI}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary me-1 edit-data-btn" data-idx="${idx}" title="Edit"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-outline-danger remove-data-btn" data-idx="${idx}" title="Remove"><i class="fas fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Add Option Data
+        document.getElementById('addOptionDataBtn').addEventListener('click', function() {
+            document.getElementById('optionDataForm').reset();
+            document.getElementById('optionDataIndex').value = '';
+            document.getElementById('optionDataModalLabel').textContent = 'Add Option Data';
+            var modal = new bootstrap.Modal(document.getElementById('optionDataModal'));
+            modal.show();
+        });
+
+        // Edit/Remove Option Data
+        document.getElementById('optionDataTable').addEventListener('click', function(e) {
+            if (e.target.closest('.edit-data-btn')) {
+                const idx = e.target.closest('.edit-data-btn').getAttribute('data-idx');
+                const data = getOptionData();
+                const row = data[idx];
+                document.getElementById('callStrike').value = row.callStrike;
+                document.getElementById('callPremium').value = row.callPremium;
+                document.getElementById('callOI').value = row.callOI;
+                document.getElementById('putStrike').value = row.putStrike;
+                document.getElementById('putPremium').value = row.putPremium;
+                document.getElementById('putOI').value = row.putOI;
+                document.getElementById('optionDataIndex').value = idx;
+                document.getElementById('optionDataModalLabel').textContent = 'Edit Option Data';
+                var modal = new bootstrap.Modal(document.getElementById('optionDataModal'));
+                modal.show();
+            }
+            if (e.target.closest('.remove-data-btn')) {
+                const idx = e.target.closest('.remove-data-btn').getAttribute('data-idx');
+                let data = getOptionData();
+                if (confirm("Remove this option data row?")) {
+                    data.splice(idx, 1);
+                    saveOptionData(data);
+                    renderOptionDataTable();
+                }
+            }
+        });
+
+        // Save Option Data (Add/Edit)
+        document.getElementById('optionDataForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Allow admin to write anything (text or number) in the fields
+            const callStrike = document.getElementById('callStrike').value.trim();
+            const callPremium = document.getElementById('callPremium').value.trim();
+            const callOI = document.getElementById('callOI').value.trim();
+            const putStrike = document.getElementById('putStrike').value.trim();
+            const putPremium = document.getElementById('putPremium').value.trim();
+            const putOI = document.getElementById('putOI').value.trim();
+            const idx = document.getElementById('optionDataIndex').value;
+            let data = getOptionData();
+            const newRow = {
+                callStrike, callPremium, callOI,
+                putStrike, putPremium, putOI
+            };
+            if (idx === '') {
+                // Add
+                data.push(newRow);
+            } else {
+                // Edit
+                data[idx] = newRow;
+            }
+            saveOptionData(data);
+            renderOptionDataTable();
+            bootstrap.Modal.getInstance(document.getElementById('optionDataModal')).hide();
+        });
+
+        // Sidebar toggle
+        document.getElementById('sidebarCollapse').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            const content = document.getElementById('content');
+            if (sidebar.style.left === '0px' || sidebar.classList.contains('active')) {
+                sidebar.style.left = '-250px';
+                content.style.marginLeft = '0';
+                sidebar.classList.remove('active');
+            } else {
+                sidebar.style.left = '0';
+                content.style.marginLeft = '250px';
+                sidebar.classList.add('active');
+            }
+        });
+
+        // Initial render
+        renderOptionDataTable();
+
+        // --- Data Sync for index.html ---
+        // index.html reads from localStorage['optionChainData'] and will show whatever admin writes here.
+        // Admin can write any text or number in the fields, and it will be shown in index.html.
+    </script>
+</body>
+</html>

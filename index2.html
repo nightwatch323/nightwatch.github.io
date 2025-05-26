@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hardik's TradeFinder - Stock Market Analysis</title>
+    <!-- Bootstrap CSS for responsiveness -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom CSS */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 80px 0;
+        }
+        .card {
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+        }
+        .auth-links {
+            display: flex;
+            align-items: center;
+        }
+        .auth-divider {
+            color: #fff;
+            margin: 0 8px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            user-select: none;
+        }
+        @media (max-width: 991.98px) {
+            .auth-links {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .auth-divider {
+                margin: 8px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-chart-line"></i> Hardik's TradeFinder
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Stocks</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Screener</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Guides</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                </ul>
+                <div class="auth-links ms-3">
+                    <a href="singin.html" class="btn btn-primary">Sign In</a>
+                    <span class="auth-divider">/</span>
+                    <a href="singup.html" class="btn btn-outline-light">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-center">
+        <div class="container">
+            <h1>Advanced Stock Market Analysis</h1>
+            <p class="lead">Find the best trading opportunities with real-time data and AI-powered insights.</p>
+            <a href="index.html" class="btn btn-light btn-lg mt-3">Get Started</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row text-center mb-4">
+                <h2>Key Features</h2>
+                <p class="lead">Tools to help you trade smarter</p>
+            </div>
+            <div class="row">
+                <!-- Feature 1 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-bolt fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Real-time Data</h5>
+                            <p class="card-text">Live market prices, volume, and trends updated every second.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Feature 2 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-robot fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">AI Predictions</h5>
+                            <p class="card-text">Machine learning models to forecast stock movements.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Feature 3 -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-book fa-3x text-primary mb-3"></i>
+                            <h5 class="card-title">Trading Guides</h5>
+                            <p class="card-text">Learn strategies from expert traders.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stock Table (Example) -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Top Stocks Today</h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Price</th>
+                            <th>Change</th>
+                            <th>Volume</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>AAPL</td>
+                            <td>$175.32</td>
+                            <td class="text-success">+1.2%</td>
+                            <td>25.4M</td>
+                            <td><button class="btn btn-sm btn-outline-primary">Analyze</button></td>
+                        </tr>
+                        <tr>
+                            <td>TSLA</td>
+                            <td>$260.14</td>
+                            <td class="text-danger">-0.8%</td>
+                            <td>18.7M</td>
+                            <td><button class="btn btn-sm btn-outline-primary">Analyze</button></td>
+                        </tr>
+                        <tr>
+                            <td>MSFT</td>
+                            <td>$328.39</td>
+                            <td class="text-success">+2.1%</td>
+                            <td>15.2M</td>
+                            <td><button class="btn btn-sm btn-outline-primary">Analyze</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4">
+        <div class="container text-center">
+            <p>&copy; 2023 Hardik's TradeFinder. All rights reserved.</p>
+            <div class="social-links mt-3">
+                <a href="#" class="text-white mx-2"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-white mx-2"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-white mx-2"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

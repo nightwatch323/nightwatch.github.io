@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Access Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CDN for styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a1931 0%, #185adb 100%);
+            min-height: 100vh;
+        }
+        .admin-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .admin-card {
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 0.5rem 2rem rgba(10, 25, 49, 0.25);
+            background: linear-gradient(135deg, #11235a 60%, #1b263b 100%);
+            color: #eaf6fb;
+        }
+        .admin-header {
+            background: linear-gradient(90deg, #185adb 60%, #0a1931 100%);
+            color: #fff;
+            padding: 1.2rem;
+            margin-bottom: 2rem;
+            border-radius: 0.75rem 0.75rem 0 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(24, 90, 219, 0.15);
+        }
+        .admin-header h2 {
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+        .admin-actions {
+            margin-top: 2rem;
+        }
+        .btn-primary {
+            background-color: #185adb;
+            border-color: #185adb;
+        }
+        .btn-primary:hover, .btn-primary:focus {
+            background-color: #0a1931;
+            border-color: #0a1931;
+        }
+        .btn-secondary {
+            background-color: #11235a;
+            border-color: #11235a;
+            color: #eaf6fb;
+        }
+        .btn-secondary:hover, .btn-secondary:focus {
+            background-color: #0a1931;
+            border-color: #0a1931;
+            color: #fff;
+        }
+        .btn-danger {
+            background-color: #1b263b;
+            border-color: #1b263b;
+            color: #e94560;
+        }
+        .btn-danger:hover, .btn-danger:focus {
+            background-color: #e94560;
+            border-color: #e94560;
+            color: #fff;
+        }
+        .admin-card h5, .admin-card p {
+            color: #eaf6fb;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-card">
+            <div class="admin-header">
+                <h2>Admin Access Panel</h2>
+            </div>
+            <div>
+                <h5>Welcome, Admin!</h5>
+                <p>Use the options below to manage the application.</p>
+            </div>
+            <div class="admin-actions">
+                <a href="index.html" class="btn btn-primary w-100 mb-2">View Option Chain</a>
+                <a href="two.html" class="btn btn-secondary w-100 mb-2">Go to Login Page</a>
+                <button class="btn btn-danger w-100" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function logout() {
+            alert("You have been logged out.");
+            window.location.href = "two.html";
+        }
+    </script>
+</body>
+</html>

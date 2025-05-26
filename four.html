@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel - Unique Dark Theme</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CDN for base styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0f1a 0%, #0d1b2a 100%);
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .admin-panel-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+        .admin-panel-card {
+            background: linear-gradient(120deg, #111827 70%, #1e2746 100%);
+            border-radius: 1.2rem;
+            box-shadow: 0 8px 32px 0 rgba(10, 31, 68, 0.45);
+            padding: 2.5rem 2rem 2rem 2rem;
+            max-width: 440px;
+            width: 100%;
+            color: #e0e6ed;
+            position: relative;
+            overflow: hidden;
+        }
+        .admin-panel-card::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, #1b263b 60%, transparent 100%);
+            opacity: 0.5;
+            z-index: 0;
+        }
+        .admin-panel-card::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, #0d1b2a 60%, transparent 100%);
+            opacity: 0.4;
+            z-index: 0;
+        }
+        .admin-header {
+            background: linear-gradient(90deg, #1b263b 60%, #0a0f1a 100%);
+            color: #fff;
+            padding: 1.3rem 1rem 1rem 1rem;
+            border-radius: 1.2rem 1.2rem 0 0;
+            text-align: center;
+            margin: -2.5rem -2rem 2rem -2rem;
+            box-shadow: 0 2px 12px rgba(24, 38, 59, 0.18);
+            position: relative;
+            z-index: 1;
+        }
+        .admin-header h2 {
+            font-weight: 800;
+            letter-spacing: 2px;
+            font-size: 2rem;
+            margin-bottom: 0.2rem;
+            text-shadow: 0 2px 8px #0a0f1a88;
+        }
+        .admin-header .glow-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, #00cfff 60%, #1b263b 100%);
+            border-radius: 50%;
+            margin-left: 8px;
+            box-shadow: 0 0 12px #00cfff88, 0 0 24px #1b263b44;
+            vertical-align: middle;
+        }
+        .admin-actions {
+            margin-top: 2.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+            z-index: 1;
+            position: relative;
+        }
+        .btn-unique {
+            background: linear-gradient(90deg, #185adb 60%, #0a1931 100%);
+            color: #e0e6ed;
+            border: none;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-radius: 0.7rem;
+            box-shadow: 0 2px 8px #0a193144;
+            transition: background 0.2s, color 0.2s, transform 0.15s;
+        }
+        .btn-unique:hover, .btn-unique:focus {
+            background: linear-gradient(90deg, #0a1931 60%, #185adb 100%);
+            color: #fff;
+            transform: translateY(-2px) scale(1.03);
+        }
+        .btn-outline-unique {
+            background: transparent;
+            color: #00cfff;
+            border: 2px solid #185adb;
+            border-radius: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: background 0.2s, color 0.2s, border 0.2s, transform 0.15s;
+        }
+        .btn-outline-unique:hover, .btn-outline-unique:focus {
+            background: #185adb;
+            color: #fff;
+            border-color: #00cfff;
+            transform: translateY(-2px) scale(1.03);
+        }
+        .btn-danger-unique {
+            background: linear-gradient(90deg, #1b263b 60%, #e94560 100%);
+            color: #fff;
+            border: none;
+            border-radius: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: background 0.2s, color 0.2s, transform 0.15s;
+        }
+        .btn-danger-unique:hover, .btn-danger-unique:focus {
+            background: linear-gradient(90deg, #e94560 60%, #1b263b 100%);
+            color: #fff;
+            transform: translateY(-2px) scale(1.03);
+        }
+        .admin-panel-card h5, .admin-panel-card p {
+            color: #b6c6e3;
+            z-index: 1;
+            position: relative;
+        }
+        /* Decorative animated lines */
+        .decorative-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .decorative-lines svg {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+        }
+        @media (max-width: 600px) {
+            .admin-panel-card {
+                padding: 1.2rem 0.5rem 1rem 0.5rem;
+                max-width: 98vw;
+            }
+            .admin-header {
+                margin: -1.2rem -0.5rem 1.2rem -0.5rem;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="decorative-lines">
+        <svg>
+            <defs>
+                <linearGradient id="lineGrad1" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#185adb" stop-opacity="0.2"/>
+                    <stop offset="100%" stop-color="#00cfff" stop-opacity="0.1"/>
+                </linearGradient>
+                <linearGradient id="lineGrad2" x1="1" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#1b263b" stop-opacity="0.15"/>
+                    <stop offset="100%" stop-color="#e94560" stop-opacity="0.08"/>
+                </linearGradient>
+            </defs>
+            <path d="M0,100 Q300,200 600,100 T1200,100" stroke="url(#lineGrad1)" stroke-width="4" fill="none">
+                <animate attributeName="d" dur="6s" repeatCount="indefinite"
+                    values="
+                        M0,100 Q300,200 600,100 T1200,100;
+                        M0,120 Q300,180 600,120 T1200,120;
+                        M0,100 Q300,200 600,100 T1200,100
+                    " />
+            </path>
+            <path d="M0,400 Q400,300 800,400 T1600,400" stroke="url(#lineGrad2)" stroke-width="3" fill="none">
+                <animate attributeName="d" dur="8s" repeatCount="indefinite"
+                    values="
+                        M0,400 Q400,300 800,400 T1600,400;
+                        M0,420 Q400,320 800,420 T1600,420;
+                        M0,400 Q400,300 800,400 T1600,400
+                    " />
+            </path>
+        </svg>
+    </div>
+    <div class="admin-panel-container">
+        <div class="admin-panel-card">
+            <div class="admin-header">
+                <h2>Admin Panel <span class="glow-dot"></span></h2>
+                <div style="font-size: 1rem; color: #00cfff; letter-spacing: 1px; margin-top: 0.2rem;">
+                    Secure Access &mdash; <span style="color:#e94560;">Dark Mode</span>
+                </div>
+            </div>
+            <div>
+                <h5>Welcome, <span style="color:#00cfff;">Admin</span>!</h5>
+                <p>Manage your application with style. Explore the unique dark interface and use the options below.</p>
+            </div>
+            <div class="admin-actions">
+                <a href="index.html" class="btn btn-unique w-100">View Option Chain</a>
+                <a href="two.html" class="btn btn-outline-unique w-100">Go to Login Page</a>
+                <a href="five.html" class="btn btn-unique w-100">Admin Panal Acsess</a>
+                <button class="btn btn-danger-unique w-100" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function logout() {
+            // You can add real logout logic here
+            alert("You have been logged out.");
+            window.location.href = "two.html";
+        }
+    </script>
+</body>
+</html>
